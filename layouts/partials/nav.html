@@ -52,6 +52,15 @@
                 {{ $pages = $pages | append . }}
             {{ end }}
 
+            {{ with .Site.GetPage "/mixing-and-production" }}
+                {{ $pages = $pages | append . }}
+            {{ end }}
+
+            {{ with .Site.GetPage "/about" }}
+                {{ $pages = $pages | append . }}
+            {{ end }}
+
+
             {{ range sort $pages "Params.weight" }}
             {{ if ne .Name "contact.md" }}
             {{ if eq (os.Stat .File.Dir).Name "projects" }}
@@ -113,7 +122,5 @@
             {{ end }}
         </div>
     </nav>
-    <hr>
-</div>
 <!-- End Nav bar -->
 {{ end }}
