@@ -10,9 +10,36 @@ text-align:center;
 </style>
 
 <body>
-    <div class="container markdown top-pad">
+    <hr>
+    <!-- <div class="container markdown top-pad">
         {{ .Content }}
+    </div> -->
+
+    <div class="container">
+        <!-- <h2 class="title is-2 has-text-centered">{{ .Title | markdownify }}</h2> -->
+        {{ if .Params.Image }}
+        <div class="columns">
+            <div class="column is-one-third has-text-centered">
+                {{ with .Resources.GetMatch .Params.Image }}
+                {{ with .Resize "320x" }}
+                <img class="img-responsive avatar" src="{{ .Permalink }}" alt="{{ .Name }}">
+                {{ end }}
+                {{ end }}
+            </div>
+            <div class="markdown column">
+                {{ .Content }}
+            </div>
+        </div>
+        {{ else }}
+        <div class="markdown has-text-centered">
+            {{ .Content }}
+        </div>
+        {{ end }}
+        <div id="social">
+        {{ partial "home/social.html" . }}
+        </div>
     </div>
+
     <div class="container">
         <ul>
             {{ range .Pages.ByPublishDate.Reverse }}
@@ -24,18 +51,11 @@ text-align:center;
             <li>
                 <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
             </li>
+
             {{ end }}
             {{ end }}
+
       </div>
 
-
-
-      <div id="social">
-        Do reach out if you’ve got a project I could work on.
-        <br>
-        <br>
-      {{ partial "home/social.html" . }}
-      <!-- <a> <href="Meet with me"(https://cloud.disroot.org/index.php/apps/appointments/embed/EUjocxRHoAgXZUItmcCAsQ%3D%3D/form)</a> -->
-      <!-- </div>
 </body>
 {{ end }}
