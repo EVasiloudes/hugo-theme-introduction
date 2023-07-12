@@ -1,3 +1,4 @@
+{{ if .Site.Params.showMenu | default true }}
 <!-- Begin Nav bar -->
 <div class="container">
     <hr>
@@ -50,6 +51,15 @@
             {{ with .Site.GetPage "/projects" }}
                 {{ $pages = $pages | append . }}
             {{ end }}
+
+            {{ with .Site.GetPage "/mixing-and-production" }}
+                {{ $pages = $pages | append . }}
+            {{ end }}
+
+            {{ with .Site.GetPage "/about" }}
+                {{ $pages = $pages | append . }}
+            {{ end }}
+
 
             {{ range sort $pages "Params.weight" }}
             {{ if ne .Name "contact.md" }}
@@ -112,6 +122,5 @@
             {{ end }}
         </div>
     </nav>
-    <hr>
-</div>
 <!-- End Nav bar -->
+{{ end }}

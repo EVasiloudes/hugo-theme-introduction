@@ -15,7 +15,6 @@
         <section id="top" class="hero is-{{ .Site.Params.home.introHeight | default "fullheight" }}">
             <!-- Hero head section to play nice with Bulma -->
             <div class="hero-head"></div>
-
             <!-- Super sweet Hero body title -->
             <div class="hero-body">
                 <div class="container has-text-centered">
@@ -26,7 +25,6 @@
                     <div class="subtitle is-3 {{ if or (.Site.Params.fadeIn | default true) .Site.Params.fadeInIndex }}fade-in two{{ end }}">
                         {{ .Content }}
                     </div>
-                    <!-- End title and tagline -->
                     <!-- Some social icons -->
                     <div class="{{ if or (.Site.Params.fadeIn | default true) .Site.Params.fadeInIndex }}fade-in three{{ end }}">
                         {{ partial "home/social.html" . }}
@@ -35,7 +33,6 @@
                 </div>
             </div> <!-- End of Hero body -->
             {{ end }}
-
             <div class="hero-foot {{ if or (.Site.Params.fadeIn | default true) .Site.Params.fadeInIndex }}fade-in three{{ end }}">
                 <!-- Tell them all about it! -->
                 {{ partial "nav.html" . }}
@@ -54,19 +51,27 @@
             {{ $pages = $pages | append . }}
         {{ end }}
 
+        {{ with .Site.GetPage "/mixing-and-producing" }}
+            {{ $pages = $pages | append . }}
+        {{ end }}
+
         {{ range sort $pages "Params.weight" }}
         {{ if ne .Name "contact.md" }}
         {{ if .File }}
         {{ if eq (os.Stat .File.Dir).Name "projects" }}
             <!-- Now for some cool projects -->
             {{ partial "home/projects.html" . }}
+        {{ else if eq (os.Stat .File.Dir).Name "mixing-and-producing" }}
+                <!-- Let`s show some blog posts -->
+            {{ partial "home/mixing-and-producing.html" . }}
         {{ else if eq (os.Stat .File.Dir).Name "blog" }}
             <!-- Let`s show some blog posts -->
-            {{ partial "home/blog.html" . }}
+            <!-- blog posts disabled -->
+            <!-- {{ partial "home/blog.html" . }} -->
         {{ else }}
 
         <!-- Range through all sections in /home execept contact.md -->
-        <div class="section" id="{{ .File.TranslationBaseName }}">
+        <!-- <div class="section" id="{{ .File.TranslationBaseName }}">
             <div class="container">
                 <h2 class="title is-2 has-text-centered">{{ .Title | markdownify }}</h2>
                 {{ if .Params.Image }}
@@ -87,13 +92,13 @@
                     {{ .Content }}
                 </div>
                 {{ end }}
-            </div>
+            </div> -->
             <!-- End About container-->
-            {{ partial "top-icon.html" . }}
-        </div>
+            <!-- {{ partial "top-icon.html" . }} -->
+        <!-- </div>
         <div class="container">
             <hr>
-        </div>
+        </div> -->
         {{ end }}
         {{ end }}
         {{ end }}
@@ -114,6 +119,7 @@
                     <a href="mailto:{{ . }}">{{ . }}</a>
                 </h3>
                 {{ end }}
+                <br>
                 {{ partial "home/social.html" . }}
             </div>
             <!-- End Contact container -->
